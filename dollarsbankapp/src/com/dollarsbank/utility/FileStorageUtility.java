@@ -1,4 +1,4 @@
-package com.dollarsbank.utility;
+package com.example.DollarsBankCoreJavaAppVl.utility;
 
 public class FileStorageUtility {
 }
