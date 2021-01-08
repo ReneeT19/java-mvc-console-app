@@ -1,9 +1,15 @@
 package com.dollarsbank.application;
 
+import com.dollarsbank.dao.AccountDAOClass;
+import com.dollarsbank.dao.CustomerDAOClass;
+import com.dollarsbank.model.Customer;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DollarsBankApplication {
+    public static CustomerDAOClass customerDB = new CustomerDAOClass();
+    public static AccountDAOClass accountDB = new AccountDAOClass();
 
     public static void main(String[] args) {promptUser();}
 
@@ -22,11 +28,11 @@ public class DollarsBankApplication {
                     switch (command) {
                         case "Create New Account":
                         case "1":
-                            createAccount(scan);
+                            runCreateAccountCommand(scan);
                             break;
                         case "Login":
                         case "2":
-                            logIn(scan);
+                            runLogInCommand(scan);
                             break;
                         case "exit":
                         case "3":
@@ -42,7 +48,7 @@ public class DollarsBankApplication {
             scan.close();
         }
 
-        public static void createAccount(Scanner scan) {
+        public static void runCreateAccountCommand(Scanner scan) {
             System.out.println("\n[Dollars Bank]\n");
             System.out.println("Creating new account...");
             String customerName = "";
@@ -75,9 +81,19 @@ public class DollarsBankApplication {
             // Initial Deposit Amount
             System.out.print("Initial Deposit Amount: ");
             initialDeposit = scan.nextInt();
+
+            int accoId = 1;
+
+            Customer newCustomer = new Customer(-1, customerName, customerAddress, customerNumber, password, initialDeposit, accoId);
+            if (customerDB.createAccount(newCustomer)) {
+                System.out.println("Customer Account Successfully Created.");
+            } else {
+                System.out.println("Customer Account Could Not Be Created.");
+            }
         }
 
-        public static void logIn(Scanner scan) {
+
+        public static void runLogInCommand(Scanner scan) {
             System.out.println("\n[Dollars Bank]\n");
             System.out.println("Enter your log in information...");
 

@@ -8,16 +8,18 @@ public class Customer {
     private long userId;
     private String password;
     private double initialDeposit;
+    private long accountId;
 
     public Customer() {
     }
 
-    public Customer(String customerName, String customerAddress, int customerNumber, long userId, String password, double initialDeposit) {
+    public Customer(long userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit, long accountId) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.userId = userId;
         this.password = password;
         this.initialDeposit = initialDeposit;
+        this.accountId = accountId;
     }
 
     public String getCustomerName() {
@@ -68,8 +70,16 @@ public class Customer {
         this.customerNumber = customerNumber;
     }
 
-    @Override
-    public String toString() {
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Customer{" +
                 "customerName='" + customerName + '\'' +
                 ", customerAddress='" + customerAddress + '\'' +
@@ -77,6 +87,7 @@ public class Customer {
                 ", userId=" + userId +
                 ", password='" + password + '\'' +
                 ", initialDeposit=" + initialDeposit +
+                ", accountId=" + accountId +
                 '}';
     }
 }
