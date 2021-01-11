@@ -16,7 +16,6 @@ public class CustomerDAOClass implements CustomerDAO {
     @Override
     public boolean createAccount(Customer customer) {
         this.customer = customer;
-        // TODO Auto-generated method stub
 
         String query = "INSERT INTO " + TABLE_NAME +
                 " (user_id, customer_name, customer_address, customer_number, account_password, initial_deposit, acco_id) " +
@@ -26,6 +25,7 @@ public class CustomerDAOClass implements CustomerDAO {
 
         try (PreparedStatement stmt = connection.prepareStatement(query);){
 
+            stmt.setLong(0, customer.getUserId());
             stmt.setString(1, customer.getCustomerName());
             stmt.setString(2, customer.getCustomerAddress());
             stmt.setInt(3, customer.getCustomerNumber());

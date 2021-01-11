@@ -19,14 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2daf586d-7bb8-4a70-b832-07f109e97145" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/dao/CustomerDAO" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/dao/CustomerDAOClass" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/application/DollarsBankApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/application/DollarsBankApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/dollarsbankapp/src/com/dollarsbank/model/Customer.java" afterDir="false" />
-    </list>
+    <list default="true" id="2daf586d-7bb8-4a70-b832-07f109e97145" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/dollarsbankapp" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -102,10 +95,11 @@
     </state>
     <state x="-1231" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1610056249038" />
     <state x="459" y="203" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1610139944953" />
-    <state x="-1288" y="147" key="FileChooserDialogImpl" timestamp="1610056282678">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1610380500647">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1288" y="147" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1610056282678" />
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1609975582444" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1610380500647" />
   </component>
 </project>
