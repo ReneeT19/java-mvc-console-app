@@ -23,6 +23,7 @@ public class Customer {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.userId = userId;
+        this.customerNumber = customerNumber;
         this.password = password;
         this.initialDeposit = initialDeposit;
 

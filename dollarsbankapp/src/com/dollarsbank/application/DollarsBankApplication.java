@@ -12,7 +12,7 @@ public class DollarsBankApplication {
 //    public static CustomerDAOClass customerDB = new CustomerDAOClass();
 //    public static AccountDAOClass accountDB = new AccountDAOClass();
     public static Customer customer = new Customer();
-    public static Account account = new Account();
+    public static Account account;
 
     public static void main(String[] args) {
         promptUser();
@@ -95,6 +95,9 @@ public class DollarsBankApplication {
         customer.customerMap.put(userId, newCustomer);
         System.out.print("Customer acocunt successfully created.");
         System.out.print(initialDeposit);
+
+        Account account = new Account(newCustomer);
+
     }
 
 //        if (customerDB.createAccount(newCustomer)) {
@@ -136,13 +139,13 @@ public class DollarsBankApplication {
                         case 2:
                             withdrawAmount(newCustomer);
                             break;
-//                    case 3: fundsTransfer();
-//                        break;
+//                        case 3: fundsTransfer();
+//                            break;
                         case 4:
-                            viewRecentTransactions();
+                            viewRecentTransactions(account);
                             break;
                         case 5:
-                            displayCustomerInfo();
+                            displayCustomerInfo(newCustomer);
                             break;
                         case 6:
                             signOut();
@@ -157,9 +160,9 @@ public class DollarsBankApplication {
                 scan.close();
             }
 
-
     //deposit method
     public static void depositAmount(Customer newCustomer) throws InterruptedException {
+        account = new Account(newCustomer);
 
         Scanner scan = new Scanner(System.in);
         System.out.println("---------------Welcome to Deposit Portal----------------");
@@ -169,8 +172,9 @@ public class DollarsBankApplication {
         option = scan.nextLine();
         account.depositFunds(option);
         System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
+        account.addTransaction(account.getBalance() + " deposited to your account.");
         System.out.println("------------------------------------------------------------");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         System.out.flush();
     }
 
@@ -185,46 +189,60 @@ public class DollarsBankApplication {
         option = scan.nextLine();
         account.withdrawFunds(option);
         System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
+        account.addTransaction(account.getBalance() + " withdrawn from your account.");
         System.out.println("------------------------------------------------------------");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         System.out.flush();
     }
 
     //Funds Transfer Method
-//    public static void fundsTransfer() throws InterruptedException {
-//        Scanner scan = new Scanner(System.in);
-//        long withdrawAmt;
-//        long accountBalance = 500;
-//
-//        System.out.println("---------------Welcome to Funds Transfer Portal----------------");
-//        System.out.println("You are Transferring amount for Account Number: ");
-//        System.out.println("\nEnter the Amount to Transfer : ");
-//        withdrawAmt = scan.nextLong();
-//        accountBalance = -withdrawAmt;
-//        System.out.println("Amount Transferred Successfully.. \nUpdated Balance: " + accountBalance);
-//        System.out.println("------------------------------------------------------------");
-//        Thread.sleep(5000);
-//        System.out.flush();
-//    }
+    public static void fundsTransfer() throws InterruptedException {
+//        System.out.print("Enter payee username : ");
+//        username = sc.next();
+//        sc.nextLine();
+//        System.out.println("Enter amount : ");
+//        while(!sc.hasNextDouble())
+//        {
+//            System.out.println("Invalid amount. Enter again :");
+//            sc.nextLine();
+//        }
+//        amount = sc.nextDouble();
+//        sc.nextLine();
+//        if(amount > 300000)
+//        {
+//            System.out.println("Transfer limit exceeded. Contact bank manager.");
+//            break;
+//        }
+//        if(bank.customerMap.containsKey(username))
+//        {
+//            Customer payee = bank.customerMap.get(username);
+//            payee.deposit(amount,new Date());
+//            customer.withdraw(amount,new Date());
+//        }
+//        else
+//        {
+//            System.out.println("Username doesn't exist.");
+//        }
+    }
 
     //View 5 Recent Transactions Method
-    public static void viewRecentTransactions() throws InterruptedException {
+    public static void viewRecentTransactions(Account account) throws InterruptedException {
         for (String transactions : account.transactions) {
             System.out.println(transactions);
         }
     }
 
     //Display Customer Information Method
-    public static void displayCustomerInfo() throws InterruptedException
+    public static void displayCustomerInfo(Customer newCustomer) throws InterruptedException
     {
-        System.out.println("Customer name : "+ customer.getCustomerName());
-        System.out.println("Customer address : "+customer.getCustomerAddress());
-        System.out.println("Customer contact number : "+customer.getCustomerNumber());
-        System.out.println("Customer User Id : "+customer.getUserId());
-        System.out.println("Customer Password : "+customer.getPassword());
-        System.out.println("Customer Initial Deposit Amount: "+customer.getInitialDeposit());
+        System.out.println("Customer name : "+ newCustomer.getCustomerName());
+        System.out.println("Customer address : "+newCustomer.getCustomerAddress());
+        System.out.println("Customer contact number : "+newCustomer.getCustomerNumber());
+        System.out.println("Customer User Id : "+newCustomer.getUserId());
+        System.out.println("Customer Password : "+newCustomer.getPassword());
+        System.out.println("Customer Initial Deposit Amount: "+newCustomer.getInitialDeposit());
         System.out.println("------------------------------------------------------------");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         System.out.flush();
     }
 

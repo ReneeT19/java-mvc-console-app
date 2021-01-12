@@ -9,13 +9,14 @@ public class Account {
     public ArrayList<String> transactions;
     private BigDecimal bigDecimalAccountBalance = BigDecimal.ZERO;
 
-    public Account() {
+    public Account(Customer newCustomer) {
+        transactions  =  new ArrayList<String>(5);
+        addTransaction("Initial Deposit: " + newCustomer.initialDeposit);
     }
 
     public Account(double fundsTransfer, double balance) {
         this.fundsTransfer = fundsTransfer;
         this.balance = balance;
-        transactions  =  new ArrayList<String>(5);
     }
 
 
@@ -47,6 +48,13 @@ public class Account {
         bigDecimalAccountBalance = bigDecimalAccountBalance.subtract(bigDecimalWithdrawAmount);
     }
 
+    public void addTransaction(String message) {
+        transactions.add(0,message);
+        if(transactions.size()>5) {
+            transactions.remove(5);
+            transactions.trimToSize();
+        }
+    }
     @Override
     public String toString() {
         return "Account{" +
