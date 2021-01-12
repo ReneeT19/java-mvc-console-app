@@ -1,4 +1,4 @@
-package com.dollarsbank.dao;
-
-public interface AccountDAO {
-}
+//package com.dollarsbank.dao;
+//
+//public interface AccountDAO {
+//}

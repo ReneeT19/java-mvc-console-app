@@ -1,4 +1,4 @@
-package com.dollarsbank.dao;
-
-public class AccountDAOClass {
-}
+//package com.dollarsbank.dao;
+//
+//public class AccountDAOClass {
+//}

@@ -1,25 +1,31 @@
 package com.dollarsbank.model;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Customer {
 
     private String customerName;
     private String customerAddress;
     private int customerNumber;
     private long userId;
-    private String password;
-    private double initialDeposit;
-    private long accountId;
+    public String password;
+    public double initialDeposit;
+    private BigDecimal bigDecimalInitialDeposit = BigDecimal.ZERO;
 
+    public Map<Long,Customer> customerMap;
     public Customer() {
+        customerMap = new HashMap<Long,Customer>();
     }
 
-    public Customer(long userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit, long accountId) {
+    public Customer(long userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.userId = userId;
         this.password = password;
         this.initialDeposit = initialDeposit;
-        this.accountId = accountId;
+
     }
 
     public String getCustomerName() {
@@ -54,8 +60,8 @@ public class Customer {
         this.password = password;
     }
 
-    public double getInitialDeposit() {
-        return initialDeposit;
+    public String getInitialDeposit() {
+        return bigDecimalInitialDeposit.toString();
     }
 
     public void setInitialDeposit(double initialDeposit) {
@@ -70,13 +76,6 @@ public class Customer {
         this.customerNumber = customerNumber;
     }
 
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
-    }
 
     @java.lang.Override
     public java.lang.String toString() {
@@ -87,7 +86,6 @@ public class Customer {
                 ", userId=" + userId +
                 ", password='" + password + '\'' +
                 ", initialDeposit=" + initialDeposit +
-                ", accountId=" + accountId +
                 '}';
     }
 }

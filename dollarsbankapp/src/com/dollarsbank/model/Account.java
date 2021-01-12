@@ -1,46 +1,23 @@
 package com.dollarsbank.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 public class Account {
-    private long accountId;
-    private double deposit;
-    private double withdraw;
     private double fundsTransfer;
     private double balance;
+    public ArrayList<String> transactions;
+    private BigDecimal bigDecimalAccountBalance = BigDecimal.ZERO;
 
     public Account() {
     }
 
-    public Account(long accountId, double deposit, double withdraw, double fundsTransfer, double balance) {
-        this.accountId = accountId;
-        this.deposit = deposit;
-        this.withdraw = withdraw;
+    public Account(double fundsTransfer, double balance) {
         this.fundsTransfer = fundsTransfer;
         this.balance = balance;
+        transactions  =  new ArrayList<String>(5);
     }
 
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
-    }
-
-    public double getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(double deposit) {
-        this.deposit = deposit;
-    }
-
-    public double getWithdraw() {
-        return withdraw;
-    }
-
-    public void setWithdraw(double withdraw) {
-        this.withdraw = withdraw;
-    }
 
     public double getFundsTransfer() {
         return fundsTransfer;
@@ -50,22 +27,26 @@ public class Account {
         this.fundsTransfer = fundsTransfer;
     }
 
-    public double getBalance() {
-        return balance;
+    public String getBalance() {
+        return bigDecimalAccountBalance.toString();
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
     }
 
+    public void depositFunds(String stringDepositAmount)
+    {
+        BigDecimal bigDecimalDepositAmount = new BigDecimal(stringDepositAmount);
+        bigDecimalAccountBalance = bigDecimalAccountBalance.add(bigDecimalDepositAmount);
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-                "accountId=" + accountId +
-                ", deposit=" + deposit +
-                ", withdraw=" + withdraw +
                 ", fundsTransfer=" + fundsTransfer +
                 ", balance=" + balance +
                 '}';
     }
+
 }
