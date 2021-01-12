@@ -41,6 +41,12 @@ public class Account {
         bigDecimalAccountBalance = bigDecimalAccountBalance.add(bigDecimalDepositAmount);
     }
 
+    public void withdrawFunds(String stringWithdrawAmount)
+    {
+        BigDecimal bigDecimalWithdrawAmount = new BigDecimal(stringWithdrawAmount);
+        bigDecimalAccountBalance = bigDecimalAccountBalance.subtract(bigDecimalWithdrawAmount);
+    }
+
     @Override
     public String toString() {
         return "Account{" +

@@ -134,7 +134,7 @@ public class DollarsBankApplication {
                             depositAmount(newCustomer);
                             break;
                         case 2:
-                            withdrawAmount();
+                            withdrawAmount(newCustomer);
                             break;
 //                    case 3: fundsTransfer();
 //                        break;
@@ -160,40 +160,31 @@ public class DollarsBankApplication {
 
     //deposit method
     public static void depositAmount(Customer newCustomer) throws InterruptedException {
-//        Customer newCustomer = new Customer();
 
         Scanner scan = new Scanner(System.in);
-//        long depositAmt;
-//        long accountBalance = 500;
         System.out.println("---------------Welcome to Deposit Portal----------------");
-        System.out.println("You are Depositing amount for Account Number: ");
+//        System.out.println("You are Depositing amount for Account Number: ");
         System.out.println("\nEnter the Amount to Deposit : ");
-//        depositAmt = scan.nextLong();
-//        accountBalance = +depositAmt;
-//        System.out.println("Amount Deposited Successfully.. \nUpdated Balance: " + accountBalance);
-//        System.out.println("------------------------------------------------------------");
-//        Thread.sleep(5000);
-//        System.out.flush();
         String option;
         option = scan.nextLine();
         account.depositFunds(option);
-        System.out.print("\n Success. Your new balance is: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
-
+        System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
+        System.out.println("------------------------------------------------------------");
+        Thread.sleep(5000);
+        System.out.flush();
     }
-    
 
     //withdrawal method
-    public static void withdrawAmount() throws InterruptedException {
+    public static void withdrawAmount(Customer newCustomer) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
-        long withdrawAmt;
-        long accountBalance = 500;
 
         System.out.println("---------------Welcome to Withdrawal Portal----------------");
-        System.out.println("You are Withdrawing amount for Account Number: ");
+//        System.out.println("You are Withdrawing amount for Account Number: ");
         System.out.println("\nEnter the Amount to Withdraw : ");
-        withdrawAmt = scan.nextLong();
-        accountBalance = -withdrawAmt;
-        System.out.println("Amount Withdrawn Successfully.. \nUpdated Balance: " + accountBalance);
+        String option;
+        option = scan.nextLine();
+        account.withdrawFunds(option);
+        System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(5000);
         System.out.flush();
