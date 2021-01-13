@@ -3,30 +3,31 @@ package com.dollarsbank.model;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Customer {
+public class Customer extends Account {
 
     private String customerName;
     private String customerAddress;
     private int customerNumber;
-    private long userId;
+    private String userId;
     public String password;
     public double initialDeposit;
     private BigDecimal bigDecimalInitialDeposit = BigDecimal.ZERO;
 
-    public Map<Long,Customer> customerMap;
+
+    public Map<String,Customer> customerMap;
     public Customer() {
-        customerMap = new HashMap<Long,Customer>();
+        customerMap = new HashMap<String,Customer>();
     }
 
-    public Customer(long userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit) {
+    public Customer(String userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.userId = userId;
         this.customerNumber = customerNumber;
         this.password = password;
         this.initialDeposit = initialDeposit;
-
     }
 
     public String getCustomerName() {
@@ -45,11 +46,11 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

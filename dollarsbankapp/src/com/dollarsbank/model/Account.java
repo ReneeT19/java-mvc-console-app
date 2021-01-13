@@ -2,23 +2,37 @@ package com.dollarsbank.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Account {
+    private String userId;
     private double fundsTransfer;
     private double balance;
     public ArrayList<String> transactions;
     private BigDecimal bigDecimalAccountBalance = BigDecimal.ZERO;
+    public Map<String,Account> accountMap;
+
+    public Account() {
+        accountMap = new HashMap<String,Account>();
+    }
 
     public Account(Customer newCustomer) {
         transactions  =  new ArrayList<String>(5);
         addTransaction("Initial Deposit: " + newCustomer.initialDeposit);
     }
 
-    public Account(double fundsTransfer, double balance) {
-        this.fundsTransfer = fundsTransfer;
-        this.balance = balance;
+    public Account(String userId) {
+        this.userId = userId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public double getFundsTransfer() {
         return fundsTransfer;
