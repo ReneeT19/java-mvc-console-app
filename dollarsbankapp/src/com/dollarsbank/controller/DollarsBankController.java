@@ -1,20 +1,18 @@
 package com.dollarsbank.controller;
 
-import com.dollarsbank.model.Account;
 import com.dollarsbank.model.Customer;
+import com.dollarsbank.model.SavingsAccount;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static com.dollarsbank.utility.ColorsUtility.RED;
-import static com.dollarsbank.utility.ColorsUtility.RESET;
 import static com.dollarsbank.utility.ConsolePrinterUtility.printBox;
 import static com.dollarsbank.utility.ConsolePrinterUtility.printChoice;
 
 public class DollarsBankController {
 
     public static Customer customer = new Customer();
-    public static Account account = new Account();
+    public static SavingsAccount savingsAccount = new SavingsAccount();
 
     public static void promptUser() {
         Scanner scan = new Scanner(System.in);
@@ -51,7 +49,6 @@ public class DollarsBankController {
 
     public static void runCreateAccountCommand(Scanner scan) {
         printBox("Enter Details for New Account");
-        System.out.println("Creating new account...");
         String customerName = "";
         String customerAddress = "";
         int customerNumber = 0;
@@ -62,7 +59,6 @@ public class DollarsBankController {
         // Name
         System.out.print("Customer Name: ");
         customerName = scan.nextLine();
-
 
         // Address
         System.out.print("Customer Address: ");
@@ -85,6 +81,7 @@ public class DollarsBankController {
             System.out.println("Invalid Credentials. Try Again!");
             password = scan.next();
         }
+
         // Initial Deposit Amount
         System.out.print("Initial Deposit Amount: ");
         initialDeposit = scan.nextDouble();
@@ -92,13 +89,13 @@ public class DollarsBankController {
 
         Customer newCustomer = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
         customer.customerMap.put(userId, newCustomer);
-        System.out.print("Customer acocunt successfully created.");
+        System.out.print("Customer acocunt successfully created." + "\n");
+        System.out.println(newCustomer);
 
-        Account newAccount = new Account(userId);
-        account.accountMap.put(userId, newAccount);
-
+        SavingsAccount newAccount = new SavingsAccount(userId);
+        savingsAccount.savingsAccountMap.put(userId, newAccount);
+        System.out.println(newAccount);
     }
-
 
     public static void runLogInCommand(Scanner scan) throws InterruptedException {
         printBox("Enter Login Details");
@@ -106,8 +103,6 @@ public class DollarsBankController {
         String password = "";
         int choice = 0;
 
-        System.out.println("\n[Dollars Bank]\n");
-        System.out.println("Enter your log in information...");
         boolean checking = true;
         while (checking) {
             System.out.println("Enter your user ID : ");
@@ -119,8 +114,9 @@ public class DollarsBankController {
 
             if (customer.customerMap.containsKey(userId)) {
                 Customer newCustomer = customer.customerMap.get(userId);
-                if (newCustomer.password.equals(password)) {
+                savingsAccount = new SavingsAccount(newCustomer);
 
+                if (newCustomer.password.equals(password)) {
                     printBox("WELCOME Customer");
                     System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
                     printChoice(6);
@@ -135,7 +131,7 @@ public class DollarsBankController {
                         case 3: fundsTransfer(newCustomer);
                             break;
                         case 4:
-                            viewRecentTransactions(account);
+                            viewRecentTransactions(savingsAccount);
                             break;
                         case 5:
                             displayCustomerInfo(newCustomer);
@@ -154,15 +150,18 @@ public class DollarsBankController {
 
     //deposit method
     public static void depositAmount(Customer newCustomer) throws InterruptedException {
-        account = new Account(newCustomer);
         Scanner scan = new Scanner(System.in);
         printBox("Welcome to the Deposit Portal");
         System.out.println("\nEnter the Amount to Deposit : ");
         String option;
         option = scan.nextLine();
-        account.depositFunds(option);
-        System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
-        account.addTransaction(account.getBalance() + " deposited to your account.");
+        savingsAccount.depositFunds(option);
+        if(Double.parseDouble(option) > 10000) {
+            System.out.println("You can't deposit more than 10000 at a time.");
+            return;
+        }
+            System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
+        savingsAccount.addTransaction(savingsAccount.getBalance() + " deposited to your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
@@ -175,50 +174,53 @@ public class DollarsBankController {
         System.out.println("\nEnter the Amount to Withdraw : ");
         String option;
         option = scan.nextLine();
-        account.withdrawFunds(option);
-        System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(account.getBalance())) + "\n");
-        account.addTransaction(account.getBalance() + " withdrawn from your account.");
+        savingsAccount.withdrawFunds(option);
+        if(Double.parseDouble(option) > Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance()))) {
+            System.out.println("Insufficient balance.");
+            return;
+        }
+        System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
+        savingsAccount.addTransaction(savingsAccount.getBalance() + " withdrawn from your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
     }
 
-    //Funds Transfer Method
+//    Funds Transfer Method
     public static void fundsTransfer(Customer newCustomer) throws InterruptedException {
         printBox("Welcome to the Funds Transfer Portal");
         Scanner scan = new Scanner(System.in);
         String userId = "";
-        String amount = "";
+        String fundsTransfer = "";
 
         System.out.print("Enter payee user Id : ");
         userId = scan.next();
         scan.nextLine();
         System.out.println("Enter amount : ");
-        while (!scan.hasNextDouble()) {
-            System.out.println("Invalid amount. Enter again :");
-            scan.nextLine();
-        }
-        amount = scan.next();
-        scan.nextLine();
 
+        fundsTransfer = scan.nextLine();
+        if((Double.parseDouble(fundsTransfer)) > 300000)
+        {
+            System.out.println("Transfer limit exceeded. Contact bank manager.");
+            return;
+        }
         if (customer.customerMap.containsKey(userId)) {
             Customer payee = customer.customerMap.get(userId);
-
-            payee.depositFunds(amount);
-            newCustomer.withdrawFunds(amount);
-
-            System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payee.getBalance())) +
-                    "\nUpdated Balance for the payer: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
-
+            SavingsAccount payeeAccount = new SavingsAccount(payee);
+            payeeAccount.depositFunds(fundsTransfer);
+            savingsAccount.withdrawFunds(fundsTransfer);
+            System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payeeAccount.getBalance())) +
+                    "\nUpdated Balance for the payer: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
+            savingsAccount.addTransaction(savingsAccount.getBalance() + " transferred from your account.");
         } else {
             System.out.println("User Id doesn't exist.");
         }
     }
 
     //View 5 Recent Transactions Method
-    public static void viewRecentTransactions(Account account) throws InterruptedException {
+    public static void viewRecentTransactions(SavingsAccount savingsAccount) throws InterruptedException {
         printBox("Welcome to the 5 Recent Transactions Portal");
-        for (String transactions : account.transactions) {
+        for (String transactions : savingsAccount.transactions) {
             System.out.println(transactions);
         }
     }
