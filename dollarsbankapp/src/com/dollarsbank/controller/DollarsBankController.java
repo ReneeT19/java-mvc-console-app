@@ -48,13 +48,15 @@ public class DollarsBankController {
     }
 
     public static void runCreateAccountCommand(Scanner scan) {
-        printBox("Enter Details for New Account");
         String customerName = "";
         String customerAddress = "";
         int customerNumber = 0;
         String userId = "";
         String password = "";
         double initialDeposit = 0.0;
+
+        // Header
+        printBox("Enter Details for New Account");
 
         // Name
         System.out.print("Customer Name: ");
@@ -89,12 +91,10 @@ public class DollarsBankController {
 
         Customer newCustomer = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
         customer.customerMap.put(userId, newCustomer);
-        System.out.print("Customer acocunt successfully created." + "\n");
-        System.out.println(newCustomer);
+        System.out.print("Customer account successfully created." + "\n");
 
         SavingsAccount newAccount = new SavingsAccount(userId);
         savingsAccount.savingsAccountMap.put(userId, newAccount);
-        System.out.println(newAccount);
     }
 
     public static void runLogInCommand(Scanner scan) throws InterruptedException {
@@ -155,12 +155,12 @@ public class DollarsBankController {
         System.out.println("\nEnter the Amount to Deposit : ");
         String option;
         option = scan.nextLine();
-        savingsAccount.depositFunds(option);
         if(Double.parseDouble(option) > 10000) {
             System.out.println("You can't deposit more than 10000 at a time.");
             return;
         }
-            System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
+        savingsAccount.depositFunds(option);
+        System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
         savingsAccount.addTransaction(savingsAccount.getBalance() + " deposited to your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
@@ -174,11 +174,11 @@ public class DollarsBankController {
         System.out.println("\nEnter the Amount to Withdraw : ");
         String option;
         option = scan.nextLine();
-        savingsAccount.withdrawFunds(option);
         if(Double.parseDouble(option) > Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance()))) {
             System.out.println("Insufficient balance.");
             return;
         }
+        savingsAccount.withdrawFunds(option);
         System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(savingsAccount.getBalance())) + "\n");
         savingsAccount.addTransaction(savingsAccount.getBalance() + " withdrawn from your account.");
         System.out.println("------------------------------------------------------------");
@@ -191,7 +191,7 @@ public class DollarsBankController {
         printBox("Welcome to the Funds Transfer Portal");
         Scanner scan = new Scanner(System.in);
         String userId = "";
-        String fundsTransfer = "";
+        String fundsTransfer;
 
         System.out.print("Enter payee user Id : ");
         userId = scan.next();

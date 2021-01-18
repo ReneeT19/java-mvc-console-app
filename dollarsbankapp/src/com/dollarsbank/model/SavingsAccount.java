@@ -7,11 +7,10 @@ import java.util.Map;
 
 public class SavingsAccount implements Account {
     private String userId;
+    private String stringAccountBalance;
     public ArrayList<String> transactions;
     private BigDecimal bigDecimalAccountBalance = BigDecimal.ZERO;
-    private BigDecimal bigDecimalFundsTransfer= BigDecimal.ZERO;
-    private String stringAccountBalance;
-    private String stringFundsTransfer;
+
 
     public Map<String,SavingsAccount> savingsAccountMap;
 
@@ -31,7 +30,6 @@ public class SavingsAccount implements Account {
     public SavingsAccount(String userId, String stringAccountBalance, String stringFundsTransfer) {
         this.userId = userId;
         this.stringAccountBalance = stringAccountBalance;
-        this.stringFundsTransfer = stringFundsTransfer;
     }
 
     public String getUserId() {
@@ -40,14 +38,6 @@ public class SavingsAccount implements Account {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getFundsTransfer() {
-        return bigDecimalFundsTransfer.toString();
-    }
-
-    public void setFundsTransfer(String stringFundsTransfer) {
-        this.stringFundsTransfer = stringFundsTransfer;
     }
 
     public String getBalance() {
@@ -86,9 +76,7 @@ public class SavingsAccount implements Account {
                 "userId='" + userId + '\'' +
                 ", transactions=" + transactions +
                 ", bigDecimalAccountBalance=" + bigDecimalAccountBalance +
-                ", bigDecimalFundsTransfer=" + bigDecimalFundsTransfer +
                 ", stringAccountBalance='" + stringAccountBalance + '\'' +
-                ", stringFundsTransfer='" + stringFundsTransfer + '\'' +
                 ", savingsAccountMap=" + savingsAccountMap +
                 '}';
     }
