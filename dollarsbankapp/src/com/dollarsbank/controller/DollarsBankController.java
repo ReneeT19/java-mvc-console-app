@@ -1,13 +1,11 @@
 package com.dollarsbank.controller;
 
-import com.dollarsbank.model.Account;
 import com.dollarsbank.model.Customer;
+import com.dollarsbank.model.SavingsAccount;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static com.dollarsbank.utility.ColorsUtility.RED;
-import static com.dollarsbank.utility.ColorsUtility.RESET;
 import static com.dollarsbank.utility.ConsolePrinterUtility.printBox;
 import static com.dollarsbank.utility.ConsolePrinterUtility.printChoice;
 
@@ -65,6 +63,9 @@ public class DollarsBankController {
         printBox("Enter Details for New Account");
         System.out.println("Creating new account...");
 
+        // Header
+        printBox("Enter Details for New Account");
+
         // Name
         System.out.print("Customer Name: ");
         customerName = scan.nextLine();
@@ -90,6 +91,7 @@ public class DollarsBankController {
             System.out.println("Invalid Credentials. Try Again!");
             password = scan.next();
         }
+
         // Initial Deposit Amount
         System.out.print("Initial Deposit Amount: ");
         initialDeposit = scan.nextDouble();
@@ -201,6 +203,12 @@ public class DollarsBankController {
         String option;
         option = scan.nextLine();
 
+        fundsTransfer = scan.nextLine();
+        if((Double.parseDouble(fundsTransfer)) > 300000)
+        {
+            System.out.println("Transfer limit exceeded. Contact bank manager.");
+            return;
+        }
         if (customer.customerMap.containsKey(userId)) {
             payee = customer.customerMap.get(userId);
             System.out.println(payee);

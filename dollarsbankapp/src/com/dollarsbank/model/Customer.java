@@ -3,9 +3,8 @@ package com.dollarsbank.model;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Customer extends Account {
+public class Customer extends SavingsAccount {
 
     private String customerName;
     private String customerAddress;
