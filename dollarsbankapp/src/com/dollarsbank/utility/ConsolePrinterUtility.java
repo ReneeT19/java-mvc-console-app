@@ -31,11 +31,11 @@ public class ConsolePrinterUtility {
     public static void printChoice(Integer number) {
         System.out.print(GREEN + "Enter choice ");
         for (int i = 1; i <= number; i++) {
-            System.out.print(i);
-            if (i < number) {
-                System.out.print(" or " );
-            } else {
-                System.out.println("");
+            if(i < number) {
+                System.out.print(i + ", ");
+            }
+            if (i == number) {
+                System.out.print("or " + i);
             }
         } System.out.println(RESET + "");
     }

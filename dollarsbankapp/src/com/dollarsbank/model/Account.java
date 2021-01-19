@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Account {
     private String userId;
-    private double fundsTransfer;
     private double balance;
+    private String stringAccountBalance;
     public ArrayList<String> transactions;
     private BigDecimal bigDecimalAccountBalance = BigDecimal.ZERO;
     public Map<String,Account> accountMap;
@@ -34,20 +34,13 @@ public class Account {
         this.userId = userId;
     }
 
-    public double getFundsTransfer() {
-        return fundsTransfer;
-    }
-
-    public void setFundsTransfer(double fundsTransfer) {
-        this.fundsTransfer = fundsTransfer;
-    }
-
     public String getBalance() {
         return bigDecimalAccountBalance.toString();
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setBalance(String stringAccountBalance) {
+        this.stringAccountBalance = stringAccountBalance;
+        bigDecimalAccountBalance = new BigDecimal(stringAccountBalance);
     }
 
     public void depositFunds(String stringDepositAmount)
@@ -69,12 +62,4 @@ public class Account {
             transactions.trimToSize();
         }
     }
-    @Override
-    public String toString() {
-        return "Account{" +
-                ", fundsTransfer=" + fundsTransfer +
-                ", balance=" + balance +
-                '}';
-    }
-
 }

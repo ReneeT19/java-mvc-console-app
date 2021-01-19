@@ -62,9 +62,8 @@ public class Customer extends Account {
         this.password = password;
     }
 
-    public String getInitialDeposit() {
-        return bigDecimalInitialDeposit.toString();
-    }
+    public double getInitialDeposit() {
+        return initialDeposit;    }
 
     public void setInitialDeposit(double initialDeposit) {
         this.initialDeposit = initialDeposit;
