@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Customer extends SavingsAccount {
+public class Customer extends Account {
 
     private String customerName;
     private String customerAddress;

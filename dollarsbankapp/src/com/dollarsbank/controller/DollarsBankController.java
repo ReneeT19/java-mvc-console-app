@@ -1,7 +1,8 @@
 package com.dollarsbank.controller;
 
+import com.dollarsbank.model.Account;
 import com.dollarsbank.model.Customer;
-import com.dollarsbank.model.SavingsAccount;
+//import com.dollarsbank.model.SavingsAccount;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -16,7 +17,6 @@ public class DollarsBankController {
     private static String userId = "";
     private static String password = "";
     private static double initialDeposit=0.0;
-
 
     public static Customer customer = new Customer();
     public static Account account = new Account();
@@ -60,9 +60,6 @@ public class DollarsBankController {
     }
 
     public static void runCreateAccountCommand(Scanner scan) {
-        printBox("Enter Details for New Account");
-        System.out.println("Creating new account...");
-
         // Header
         printBox("Enter Details for New Account");
 
@@ -116,7 +113,7 @@ public class DollarsBankController {
         int choice = 0;
 
         boolean checking = true;
-        while (checking) {
+
             System.out.println("Enter your user ID : ");
             userId = scan.next();
             scan.nextLine();
@@ -130,33 +127,35 @@ public class DollarsBankController {
 
                 if (payer.password.equals(password)) {
                     printBox("WELCOME Customer");
-                    System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
-                    printChoice(6);
-                    choice = scan.nextInt();
-                    switch (choice) {
-                        case 1:
-                            depositAmount(payer);
-                            break;
-                        case 2:
-                            withdrawAmount(payer);
-                            break;
-                        case 3: fundsTransfer(payer,payee);
-                            break;
-                        case 4:
-                            viewRecentTransactions(payerAccount);
-                            break;
-                        case 5:
-                            displayCustomerInfo(payer);
-                            break;
-                        case 6:
-                            signOut();
-                            break;
+                    while (checking) {
+                        System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
+                        printChoice(6);
+                        choice = scan.nextInt();
+                        switch (choice) {
+                            case 1:
+                                depositAmount(payer);
+                                break;
+                            case 2:
+                                withdrawAmount(payer);
+                                break;
+                            case 3:
+                                fundsTransfer(payer, payee);
+                                break;
+                            case 4:
+                                viewRecentTransactions(payerAccount);
+                                break;
+                            case 5:
+                                displayCustomerInfo(payer);
+                                break;
+                            case 6:
+                                signOut();
+                                break;
+                        }
                     }
                 } else {
                     System.out.println("You have Entered Incorrect User ID or Password. Please Check Again.");
                 }
             }
-        }
         scan.close();
     }
 
@@ -169,7 +168,7 @@ public class DollarsBankController {
         option = scan.nextLine();
         payerAccount.depositFunds(option);
         System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-        payerAccount.addTransaction(payerAccount.getBalance() + " deposited to your account.");
+        payerAccount.addTransaction(option + " deposited to your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
@@ -184,7 +183,7 @@ public class DollarsBankController {
         option = scan.nextLine();
         payerAccount.withdrawFunds(option);
         System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-        payerAccount.addTransaction(payerAccount.getBalance() + " withdrawn from your account.");
+        payerAccount.addTransaction(option + " withdrawn from your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
@@ -203,12 +202,11 @@ public class DollarsBankController {
         String option;
         option = scan.nextLine();
 
-        fundsTransfer = scan.nextLine();
-        if((Double.parseDouble(fundsTransfer)) > 300000)
-        {
-            System.out.println("Transfer limit exceeded. Contact bank manager.");
-            return;
-        }
+//        if((Double.parseDouble(fundsTransfer)) > 300000)
+//        {
+//            System.out.println("Transfer limit exceeded. Contact bank manager.");
+//            return;
+//        }
         if (customer.customerMap.containsKey(userId)) {
             payee = customer.customerMap.get(userId);
             System.out.println(payee);
@@ -217,12 +215,11 @@ public class DollarsBankController {
         }
             System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payeeAccount.getBalance())) +
                     "\nUpdated Balance for the payer: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-            payerAccount.addTransaction(payerAccount.getBalance() + " transferred from your account.");
+            payerAccount.addTransaction(option + " transferred from your account.");
 //            else {
 //            System.out.println("User Id doesn't exist.");
             Thread.sleep(3000);
             System.out.flush();
-
     }
 
     //View 5 Recent Transactions Method
