@@ -28,7 +28,6 @@ public class DollarsBankController {
 
     public static void promptUser() {
         Scanner scan = new Scanner(System.in);
-
         boolean running = true;
         while (running) {
             printBox("DOLLARBANKS Welcomes You!");
@@ -97,15 +96,12 @@ public class DollarsBankController {
         //store the data into an object
         newAccount = new Account(userId);
         account.accountMap.put(userId, newAccount);
-        System.out.println(newAccount);//////////////
 
         newCustomer = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
         customer.customerMap.put(userId, newCustomer);
-        System.out.println(newCustomer);///////////////////////
 
         acc = new Account(newCustomer);
-
-        System.out.print("Customer account successfully created.");
+        System.out.print("Customer account successfully created." + "\n");
     }
 
     public static void runLogInCommand(Scanner scan) throws InterruptedException {
@@ -114,9 +110,9 @@ public class DollarsBankController {
         String password = "";
         int choice = 0;
         boolean checking = true;
-        while (checking) {
 
-            System.out.println("Enter your user ID : ");
+        while (checking) {
+        System.out.println("Enter your user ID : ");
         userId = scan.next();
         scan.nextLine();
         System.out.println("Enter password : ");
@@ -125,12 +121,12 @@ public class DollarsBankController {
 
             if (customer.customerMap.containsKey(userId)) {
                 newCustomer = customer.customerMap.get(userId);
-                System.out.println(newCustomer);
                 newAccount = account.accountMap.get(userId);
-                System.out.println(newAccount);
 
                 if (newCustomer.password.equals(password)) {
-                    printBox("WELCOME Customer");
+                    boolean showing = true;
+                    while(showing) {
+                        printBox("WELCOME Customer");
                         System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
                         printChoice(6);
                         choice = scan.nextInt();
@@ -142,7 +138,7 @@ public class DollarsBankController {
                                 withdrawAmount(newCustomer);
                                 break;
                             case 3:
-                                fundsTransfer(newCustomer,payee);
+                                fundsTransfer(newCustomer, payee);
                                 break;
                             case 4:
                                 viewRecentTransactions(acc);
@@ -155,10 +151,9 @@ public class DollarsBankController {
                                 break;
                         }
                     }
-                }else {
+                    } else {
                     System.out.println("You have Entered Incorrect User ID or Password. Please Check Again.");
-                }}
-
+                }}}
         scan.close();
     }
 
@@ -227,7 +222,7 @@ public class DollarsBankController {
                     "\nUpdated Balance for the payer: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
         acc.addTransaction(option + " transferred from your account.");
 //            else {
-//            System.out.println("User Id doesn't exist.");git 
+//            System.out.println("User Id doesn't exist.");git
             Thread.sleep(3000);
             System.out.flush();
     }
