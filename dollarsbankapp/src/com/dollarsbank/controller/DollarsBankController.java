@@ -20,11 +20,11 @@ public class DollarsBankController {
 
     public static Customer customer = new Customer();
     public static Account account = new Account();
-    public static Customer payer;
-    public static Account payerAccount;
-    public static Account payeeAccount;
-//    public static Account newAccount = new Account(userId);
+    public static Account acc;
+    public static Customer newCustomer;
     public static Customer payee;
+    public static Account newAccount;
+    public static Account payeeAccount;
 
     public static void promptUser() {
         Scanner scan = new Scanner(System.in);
@@ -94,16 +94,18 @@ public class DollarsBankController {
         initialDeposit = scan.nextDouble();
         scan.nextLine();
 
-        payer = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
-        customer.customerMap.put(userId, payer);
-        payee = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
-        customer.customerMap.put(userId, payee);
-        System.out.print("Customer account successfully created.");
+        //store the data into an object
+        newAccount = new Account(userId);
+        account.accountMap.put(userId, newAccount);
+        System.out.println(newAccount);//////////////
 
-        payerAccount = new Account(payer);
-        account.accountMap.put(userId, payer);
-        payeeAccount = new Account(payee);
-        account.accountMap.put(userId, payee);
+        newCustomer = new Customer(userId, customerName, customerAddress, customerNumber, password, initialDeposit);
+        customer.customerMap.put(userId, newCustomer);
+        System.out.println(newCustomer);///////////////////////
+
+        acc = new Account(newCustomer);
+
+        System.out.print("Customer account successfully created.");
     }
 
     public static void runLogInCommand(Scanner scan) throws InterruptedException {
@@ -111,121 +113,129 @@ public class DollarsBankController {
         String userId = "";
         String password = "";
         int choice = 0;
-
         boolean checking = true;
+        while (checking) {
 
             System.out.println("Enter your user ID : ");
-            userId = scan.next();
-            scan.nextLine();
-            System.out.println("Enter password : ");
-            password = scan.next();
-            scan.nextLine();
+        userId = scan.next();
+        scan.nextLine();
+        System.out.println("Enter password : ");
+        password = scan.next();
+        scan.nextLine();
 
             if (customer.customerMap.containsKey(userId)) {
-                Customer payer = customer.customerMap.get(userId);
-                System.out.println(payer);
+                newCustomer = customer.customerMap.get(userId);
+                System.out.println(newCustomer);
+                newAccount = account.accountMap.get(userId);
+                System.out.println(newAccount);
 
-                if (payer.password.equals(password)) {
+                if (newCustomer.password.equals(password)) {
                     printBox("WELCOME Customer");
-                    while (checking) {
                         System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
                         printChoice(6);
                         choice = scan.nextInt();
                         switch (choice) {
                             case 1:
-                                depositAmount(payer);
+                                depositAmount(newCustomer);
                                 break;
                             case 2:
-                                withdrawAmount(payer);
+                                withdrawAmount(newCustomer);
                                 break;
                             case 3:
-                                fundsTransfer(payer, payee);
+                                fundsTransfer(newCustomer,payee);
                                 break;
                             case 4:
-                                viewRecentTransactions(payerAccount);
+                                viewRecentTransactions(acc);
                                 break;
                             case 5:
-                                displayCustomerInfo(payer);
+                                displayCustomerInfo(newCustomer);
                                 break;
                             case 6:
                                 signOut();
                                 break;
                         }
                     }
-                } else {
+                }else {
                     System.out.println("You have Entered Incorrect User ID or Password. Please Check Again.");
-                }
-            }
+                }}
+
         scan.close();
     }
 
     //deposit method
-    public static void depositAmount(Customer payer) throws InterruptedException {
+    public static void depositAmount(Customer newCustomer) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         printBox("Welcome to the Deposit Portal");
         System.out.println("\nEnter the Amount to Deposit : ");
         String option;
         option = scan.nextLine();
-        payerAccount.depositFunds(option);
-        System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-        payerAccount.addTransaction(option + " deposited to your account.");
+        newCustomer.depositFunds(option);
+        System.out.print("\nAmount Deposited Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
+        acc.addTransaction(option + " deposited to your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
     }
 
     //withdrawal method
-    public static void withdrawAmount(Customer payer) throws InterruptedException {
+    public static void withdrawAmount(Customer newCustomer) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         printBox("Welcome to the Withdraw Portal");
         System.out.println("\nEnter the Amount to Withdraw : ");
         String option;
         option = scan.nextLine();
-        payerAccount.withdrawFunds(option);
-        System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-        payerAccount.addTransaction(option + " withdrawn from your account.");
+        newCustomer.withdrawFunds(option);
+        System.out.print("\nAmount Withdrawn Successfully.. \nUpdated Balance: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
+        acc.addTransaction(option + " withdrawn from your account.");
         System.out.println("------------------------------------------------------------");
         Thread.sleep(3000);
         System.out.flush();
     }
 
     //Funds Transfer Method
-    public static void fundsTransfer(Customer payer, Customer payee) throws InterruptedException {
+    public static void fundsTransfer(Customer newCustomer, Customer payee) throws InterruptedException {
         printBox("Welcome to the Funds Transfer Portal");
         Scanner scan = new Scanner(System.in);
-        String userId = "";
+        String payeeId = "";
 
         System.out.print("Enter payee user Id : ");
-        userId = scan.next();
+        payeeId = scan.next();
         scan.nextLine();
         System.out.println("Enter amount : ");
         String option;
         option = scan.nextLine();
 
+//        System.out.println(payeeAccount);
 //        if((Double.parseDouble(fundsTransfer)) > 300000)
 //        {
 //            System.out.println("Transfer limit exceeded. Contact bank manager.");
 //            return;
 //        }
-        if (customer.customerMap.containsKey(userId)) {
-            payee = customer.customerMap.get(userId);
+        if (customer.customerMap.containsKey(payeeId)) {
+            payee = customer.customerMap.get(payeeId);
+            payeeAccount = account.accountMap.get(payeeId);
+
+            System.out.println(newCustomer);
+            System.out.println(newAccount);
             System.out.println(payee);
-            payerAccount.withdrawFunds(option);
-            payeeAccount.depositFunds(option);
+            System.out.println(payeeAccount);
+
+            newCustomer.withdrawFunds(option);
+            payee.depositFunds(option);
         }
-            System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payeeAccount.getBalance())) +
-                    "\nUpdated Balance for the payer: " + Double.sum(payer.initialDeposit, Double.parseDouble(payerAccount.getBalance())) + "\n");
-            payerAccount.addTransaction(option + " transferred from your account.");
+            System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payee.getBalance())) +
+                    "\nUpdated Balance for the payer: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
+        acc.addTransaction(option + " transferred from your account.");
 //            else {
-//            System.out.println("User Id doesn't exist.");
+//            System.out.println("User Id doesn't exist.");git 
             Thread.sleep(3000);
             System.out.flush();
     }
 
     //View 5 Recent Transactions Method
-    public static void viewRecentTransactions(Account payerAccount) throws InterruptedException {
+    public static void viewRecentTransactions(Account acc) throws InterruptedException {
         printBox("Welcome to the 5 Recent Transactions Portal");
-        for (String transactions : payerAccount.transactions) {
+        for (String transactions : acc.transactions) {
             System.out.println(transactions);
         }
         Thread.sleep(3000);

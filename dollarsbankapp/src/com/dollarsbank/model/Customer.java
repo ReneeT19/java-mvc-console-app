@@ -21,9 +21,9 @@ public class Customer extends Account {
     }
 
     public Customer(String userId, String customerName, String customerAddress, int customerNumber, String password, double initialDeposit) {
+        super(userId);
         this.customerName = customerName;
         this.customerAddress = customerAddress;
-        this.userId = userId;
         this.customerNumber = customerNumber;
         this.password = password;
         this.initialDeposit = initialDeposit;
@@ -46,7 +46,7 @@ public class Customer extends Account {
     }
 
     public String getUserId() {
-        return userId;
+        return super.userId;
     }
 
     public void setUserId(String userId) {
@@ -83,7 +83,7 @@ public class Customer extends Account {
                 "customerName='" + customerName + '\'' +
                 ", customerAddress='" + customerAddress + '\'' +
                 ", customerNumber=" + customerNumber +
-                ", userId=" + userId +
+                ", userId=" + super.userId +
                 ", password='" + password + '\'' +
                 ", initialDeposit=" + initialDeposit +
                 '}';

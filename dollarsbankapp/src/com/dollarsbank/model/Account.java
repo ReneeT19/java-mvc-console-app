@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.dollarsbank.controller.DollarsBankController.newCustomer;
+
 public class Account {
-    private String userId;
+    public String userId;
     private double balance;
     private String stringAccountBalance;
     public ArrayList<String> transactions;
@@ -61,5 +63,12 @@ public class Account {
             transactions.remove(5);
             transactions.trimToSize();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "userId='" + userId + '\'' +
+                '}';
     }
 }
