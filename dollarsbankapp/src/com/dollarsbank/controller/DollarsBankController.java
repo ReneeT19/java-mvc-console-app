@@ -127,7 +127,7 @@ public class DollarsBankController {
                     boolean showing = true;
                     while(showing) {
                         printBox("WELCOME Customer");
-                        System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Sign Out");
+                        System.out.println("1.Deposit Amount\n2.Withdraw Amount\n3.Funds Transfer\n4.View 5 Recent Transactions\n5.Display Customer Information\n6.Check Account Balance\n7.Sign Out");
                         printChoice(6);
                         choice = scan.nextInt();
                         switch (choice) {
@@ -147,6 +147,9 @@ public class DollarsBankController {
                                 displayCustomerInfo(newCustomer);
                                 break;
                             case 6:
+                                checkAccountBalance(newCustomer);
+                                break;
+                            case 7:
                                 signOut();
                                 break;
                         }
@@ -200,31 +203,25 @@ public class DollarsBankController {
         String option;
         option = scan.nextLine();
 
-//        System.out.println(payeeAccount);
-//        if((Double.parseDouble(fundsTransfer)) > 300000)
-//        {
-//            System.out.println("Transfer limit exceeded. Contact bank manager.");
-//            return;
-//        }
+        if ((Double.parseDouble(option)) > 300000) {
+            System.out.println("Transfer limit exceeded. Contact bank manager.");
+            return;
+        }
         if (customer.customerMap.containsKey(payeeId)) {
             payee = customer.customerMap.get(payeeId);
             payeeAccount = account.accountMap.get(payeeId);
 
-            System.out.println(newCustomer);
-            System.out.println(newAccount);
-            System.out.println(payee);
-            System.out.println(payeeAccount);
-
             newCustomer.withdrawFunds(option);
             payee.depositFunds(option);
-        }
+
             System.out.print("\nFunds transferred successfully \nUpdated Balance for the payee: " + Double.sum(payee.initialDeposit, Double.parseDouble(payee.getBalance())) +
                     "\nUpdated Balance for the payer: " + Double.sum(newCustomer.initialDeposit, Double.parseDouble(newCustomer.getBalance())) + "\n");
-        acc.addTransaction(option + " transferred from your account.");
-//            else {
-//            System.out.println("User Id doesn't exist.");git
+            acc.addTransaction(option + " transferred from your account.");
             Thread.sleep(3000);
             System.out.flush();
+        } else {
+            System.out.println("User Id doesn't exist.");
+        }
     }
 
     //View 5 Recent Transactions Method
@@ -252,6 +249,14 @@ public class DollarsBankController {
         System.out.flush();
     }
 
+    //Check Account Balance
+    public static void checkAccountBalance(Customer newCustomer) throws InterruptedException {
+        System.out.println("The current account balance is: " + Double.sum(newCustomer.getInitialDeposit(), Double.parseDouble(newCustomer.getBalance())));
+        Thread.sleep(3000);
+        System.out.flush();
+    }
+
+    //Exit
     public static void signOut() throws InterruptedException {
         System.exit(0);
     }
